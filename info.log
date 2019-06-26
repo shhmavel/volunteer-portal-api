@@ -7,3 +7,11 @@
 {"message":"Unauthorized request to path: /api/users/","level":"error"}
 {"message":"Unauthorized request to path: /api/users/","level":"error"}
 {"message":"Unauthorized request to path: /api/auth/login","level":"error"}
+{"message":"Unauthorized request to path: /api/shifts","level":"error"}
+{"message":"Unauthorized request to path: /shifts","level":"error"}
+{"message":"Unauthorized request to path: /shifts","level":"error"}
+{"message":"Unauthorized request to path: /shifts","level":"error"}
+{"message":"Unauthorized request to path: /shifts","level":"error"}
+{"message":"Unauthorized request to path: /shifts","level":"error"}
+{"message":"Unauthorized request to path: /shifts","level":"error"}
+{"message":"Unauthorized request to path: /shifts","level":"error"}

@@ -7,6 +7,8 @@ const winston = require('winston')
 const { NODE_ENV, CLIENT_ORIGIN } = require('./config')
 const usersRouter = require('./users/users-router')
 const authRouter = require('./auth/auth-router')
+const shiftsRouter = require('./shifts/shifts-router')
+const racesRouter = require('./races/races-router')
 
 const app = express()
 
@@ -38,6 +40,8 @@ app.get('/', (req, res) => {
 })
 app.use('/api/users', usersRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/shifts', shiftsRouter)
+app.use('/api/races', racesRouter)
 
 app.use(function errorHandler(error, req, res, next) {
     let response
