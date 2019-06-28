@@ -3,8 +3,21 @@ const xss = require('xss')
 const ShiftsService = {
     getAllShifts(db){
         return db
-            .from('shifts')
-            .select('*')
+            .from('shifts AS sht')
+            .select(
+                'sht.id',
+                'sht.name',
+                'sht.race_id',
+                'sht.date',
+                'sht.day',
+                'sht.time',
+                'rc.name AS raceName',
+            )
+                .join(
+                    'races AS rc',
+                    'rc.id',
+                    'sht.race_id'
+                )
     },
     getById(db, id){
         return ShiftsService.getAllShifts(db)
@@ -25,12 +38,28 @@ const ShiftsService = {
           race_id: shift.race_id,
           date: shift.date,
           day: shift.day,
-/*           user: {
-              id: user.id,
-              full_name: user.full_name,
-              email: user.email
-          }, */
+          time: shift.time,
+          raceName: shift.raceName,
         }
+    },
+    getShiftsForRace(db, race_id){
+        return db
+            .from('shifts AS sht')
+            .select(
+                'sht.id',
+                'sht.name',
+                'sht.race_id',
+                'sht.date',
+                'sht.day',
+                'sht.time',
+                'rc.name AS raceName',
+            )
+            .where('sht.race_id', race_id)
+            .join(
+                'races AS rc',
+                'rc.id',
+                'sht.race_id'
+            )
     }
 }
 

@@ -41,4 +41,17 @@ shiftsRouter
       .catch(next)
 })
 
+shiftsRouter
+    .route('/:race_id')
+    .get((req, res, next) => {
+        ShiftsService.getShiftsForRace(
+            req.app.get('db'),
+            req.params.race_id
+        )
+            .then(shifts => {
+                res.json(shifts.map(ShiftsService.serializeShift))
+            })
+            .catch(next)
+        })
+
     module.exports = shiftsRouter

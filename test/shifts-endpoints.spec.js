@@ -23,7 +23,7 @@ describe('Shifts Endpoints', function(){
 
     afterEach('cleanup', () => helpers.cleanTables(db))
 
-    describe(`POST /api/shifts`, () => {
+    describe.only(`POST /api/shifts`, () => {
         this.beforeEach('insert users', () => 
             helpers.seedUsers(
                 db,
