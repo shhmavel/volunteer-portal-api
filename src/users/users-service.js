@@ -35,13 +35,18 @@ const UsersService = {
       },
       hashPassword(password){
         return bcrypt.hash(password, 12)
-    },
+     },
     serializeUser(user){
         return {
             id: user.id,
             full_name: xss(user.full_name),
             email: xss(user.email),
         }
+    },
+    updateUser(knex, id, newFields){
+      return knex('users')
+        .where({ id })
+        .update(newFields)
     },
 }
 module.exports = UsersService

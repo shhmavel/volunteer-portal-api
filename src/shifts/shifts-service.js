@@ -1,7 +1,7 @@
 const xss = require('xss')
 
 const ShiftsService = {
-    getAllShifts(db){
+    getAllShifts(db, user_id, race_id){
         return db
             .from('shifts AS sht')
             .select(
@@ -12,7 +12,17 @@ const ShiftsService = {
                 'sht.day',
                 'sht.time',
                 'rc.name AS raceName',
+                'sht.user_id',
             )
+            .modify(function(queryBuilder) {
+                if(user_id){
+                    queryBuilder.where('user_id',user_id)
+                }
+                if(race_id){
+                    queryBuilder.where('race_id',race_id)
+                        .andWhere('user_id',null)
+                }
+            })
                 .join(
                     'races AS rc',
                     'rc.id',
@@ -23,6 +33,11 @@ const ShiftsService = {
         return ShiftsService.getAllShifts(db)
             .where('shift.id', id)
             .first()
+    },
+    updateShift(knex, id, newFields){
+    return knex('shifts')
+        .where({ id })
+        .update(newFields)
     },
     insertShift(db, newShift){
         return db
