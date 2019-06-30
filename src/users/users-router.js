@@ -7,7 +7,7 @@ const jsonBodyParser = express.json()
 
 usersRouter 
 .post('/', jsonBodyParser, (req, res, next) => {
-    const { password , email, full_name, type } = req.body
+    const { password , email, full_name, type, credits=0 } = req.body
     for(const field of ['full_name', 'email', 'password'])
       if(!req.body[field])
           return res.status(400).json({
@@ -34,6 +34,7 @@ usersRouter
                         password: hashedPassword,
                         full_name,
                         type,
+                        credits,
                     }
 
                     return UsersService.insertUser(
@@ -49,6 +50,32 @@ usersRouter
                 }) 
         })
         .catch(next)
+})
+usersRouter
+    .route('/:user_id')
+    .patch(jsonBodyParser, (req, res, next) => {
+        const { credits } = req.body
+        const userToUpdate = { credits }
+
+        const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
+        if(numberOfValues === 0)
+            return res.status(400).json({
+                error: {
+                    message: `Request body must contain credits`
+                }
+            })
+
+        UsersService.updateUser(
+            req.app.get('db'),
+            req.params.user_id,
+            userToUpdate
+        )   
+            .then(numRowsAffected => {
+                return res.status(200).json({
+                    message: 'updated user credits'
+                })
+            })
+            .catch(next)
 })
    
 module.exports = usersRouter

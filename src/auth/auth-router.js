@@ -34,8 +34,13 @@ authRouter
 
                             const sub = dbUser.email
                             const payload = { user_id: dbUser.id}
+                            const userType = dbUser.type
+                            const userId = dbUser.id
+                            const name = dbUser.full_name
+                            const credits = dbUser.credits
                             res.send({
                                 authToken: AuthService.createJwt(sub, payload),
+                                userType, userId, name, credits
                             })
                     })
             })        
@@ -49,5 +54,6 @@ authRouter.post('/refresh', requireAuth, (req, res) => {
         authToken: AuthService.createJwt(sub, payload),
     })
 })
+
 
 module.exports = authRouter    
