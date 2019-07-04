@@ -9,6 +9,7 @@ function makeUsersArray(){
             email: 'email1@web.com',
             password: 'password',
             type: 'user',
+            credits: 2
         },
         {
             id: 2,
@@ -16,6 +17,7 @@ function makeUsersArray(){
             email: 'email2@web.com',
             password: 'password',
             type: 'user',
+            credits: 0
         },
         {
             id: 3,
@@ -23,6 +25,7 @@ function makeUsersArray(){
             email: 'email3@web.com',
             password: 'password',
             type: 'user',
+            credits: 3
         },
         {
             id: 4,
@@ -30,6 +33,7 @@ function makeUsersArray(){
             email: 'email4@web.com',
             password: 'password',
             type: 'user',
+            credits: 5
         },
         {
             id: 5,
@@ -37,6 +41,7 @@ function makeUsersArray(){
             email: 'email5@web.com',
             password: 'password',
             type: 'user',
+            credits: 0
         },
     ]
 }
@@ -71,50 +76,60 @@ function makeShiftsArray(){
         {
             id:1,
             name: "Test new shift1",
-            date: "02/03/19",
+            date: "2019-02-03T00:00:00.000Z",
             time: "test time1",
             day: "Saturday",
-            race_id: 1
+            race_name:'Test race 1',
+            race_id: 1,
+            
         },
         {
-            id:1,
+            id:2,
             name: "Test new shift2",
-            date: "02/03/19",
+            date: "2019-02-03T00:00:00.000Z",
             time: "test time2",
             day: "Saturday",
-            race_id: 1
+            race_name:'Test race 1',
+            race_id: 1,
+            
         },
         {
-            id:1,
+            id:3,
             name: "Test new shift3",
-            date: "02/03/19",
+            date: "2019-02-03T00:00:00.000Z",
             time: "test time3",
             day: "Saturday",
-            race_id: 2
+            race_name:'Test race 2',
+            race_id: 2,
+            
         },
         {
-            id:1,
+            id:4,
             name: "Test new shift4",
-            date: "02/03/19",
+            date: "2019-02-03T00:00:00.000Z",
             time: "test time4",
             day: "Saturday",
-            race_id: 3
+            race_name:'Test race 3',
+            race_id: 3,
+            
         },
         {
-            id:1,
+            id:5,
             name: "Test new shift5",
-            date: "02/03/19",
+            date: "2019-02-03T00:00:00.000Z",
             time: "test time5",
             day: "Saturday",
-            race_id: 4
+            race_name:'Test race 4',
+            race_id: 4,
+            
         },
     ]
 }
 
 function makeShiftsFixtures(){
     const testUsers = makeUsersArray()
-    const testRaces = makeRacesArray()
     const testShifts = makeShiftsArray()
+    const testRaces = makeRacesArray()
     return { testUsers, testShifts, testRaces }
 }
 
@@ -159,6 +174,20 @@ function seedUsers(db, users) {
         )
     }
 
+function seedShifts(db, shifts) {
+    const preppedShifts = shifts.map(shift => ({
+        ...shift,
+    }))
+    return db.into('shifts').insert(preppedShifts)
+        .then(() =>
+        //update the auto sequence to stay in sync
+            db.raw(
+            `SELECT setval('shifts_id_seq', ?)`,
+                [shifts[shifts.length - 1].id],
+            )
+        )
+    }
+
     function seedRaces(db, races) {
         const preppedRaces = races.map(race => ({
             ...race,
@@ -196,9 +225,11 @@ function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
         makeUsersArray,
         makeUsersFixtures,
         seedUsers,
+        seedShifts,
         makeAuthHeader,
         cleanTables,
         makeShiftsFixtures,
         makeShiftsArray,
         makeRacesArray,
+        seedRaces,
     }

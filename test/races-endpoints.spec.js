@@ -21,10 +21,16 @@ describe('Races Endpoints', function(){
 
     describe(`GET /api/races`, () => {
         const testRaces = helpers.makeRacesArray();
+        this.beforeEach('insert races', () => {
+            helpers.seedRaces(
+                db, 
+                testRaces,
+            )
+        })
 
         it(`responds with 200 and all of the races`, () => {
             return supertest(app)
-                .get('api/races')
+                .get('/api/races')
                 .expect(200, testRaces)
         })
     })

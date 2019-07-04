@@ -9,8 +9,7 @@ const jsonBodyParser = express.json()
 shiftsRouter
     .route('/')
     //.post(requireAuth, jsonBodyParser, (req, res, next) => {
-    .post(jsonBodyParser, (req, res, next) => {
-        console.log('hey we are tryign to add a new shift')
+    .post( jsonBodyParser, (req, res, next) => {
         const { name, day, date, time, race_id } = req.body
         const newShift = { name, day, date, time, race_id }
 
@@ -20,23 +19,22 @@ shiftsRouter
                     error: `Missing '${field}' in request body`
                 })
 
-                ShiftsService.insertShift(
-                    req.app.get('db'),
-                    newShift
-                )
-                  .then(shift => {
-                      res
-                        .status(201)
-                        .location(`/api/shifts/${shift.id}`)
-                        .json(ShiftsService.serializeShift(shift))
-                  })
-                  .catch(next)    
+        return ShiftsService.insertShift(
+            req.app.get('db'),
+            newShift
+        )
+            .then(shift => {
+                res
+                .status(201)
+                .location(path.posix.join(req.originalUrl, `/${shift.id}`))
+                .json(ShiftsService.serializeShift(shift))
+            })
+            .catch(next)    
     })
 
 shiftsRouter
     .route('/')
     .get((req, res, next) => {
-        console.log("req", req.query)
         ShiftsService.getAllShifts(
             req.app.get('db'),
             req.query.user_id,
@@ -51,7 +49,6 @@ shiftsRouter
 shiftsRouter
     .route('/:race_id')
     .get((req, res, next) => {
-        console.log('hey we are tryign to getby raceid')
         ShiftsService.getShiftsForRace(
             req.app.get('db'),
             req.params.race_id
@@ -65,7 +62,6 @@ shiftsRouter
 shiftsRouter
     .route('/user_id')
     .get((req, res, next) => {
-        console.log('hey we are tryign to getby userid')
         ShiftsService.getShiftsForUser(
             req.app.get('db')
         )
