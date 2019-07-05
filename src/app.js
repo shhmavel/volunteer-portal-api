@@ -41,7 +41,7 @@ const morganOption = (NODE_ENV === 'production')
 
 app.use(morgan(morganOption))
 app.use(express.json()) 
-//app.use(cors())
+app.use(cors())
 app.use(helmet())
 
 app.get('/', (req, res) => {
