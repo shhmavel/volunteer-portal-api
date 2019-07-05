@@ -16,9 +16,13 @@ usersRouter
           })
 
     const passwordError = UsersService.validatePassword(password)
+    const emailError = UsersService.validateEmail(email)
 
     if(passwordError)
         return res.status(400).json({ error: passwordError })
+    
+    if(emailError)
+          return res.status(400).json({ error: emailError })
 
     UsersService.hasUserWithUserName(
         req.app.get('db'),
