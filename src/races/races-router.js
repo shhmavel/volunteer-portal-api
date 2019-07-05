@@ -3,7 +3,6 @@ const path = require('path')
 const RacesService = require('./races-service.js')
 
 const racesRouter = express.Router()
-const jsonBodyParser = express.json()
 
 racesRouter
     .route('/')
