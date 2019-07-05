@@ -30,9 +30,18 @@ const morganOption = (NODE_ENV === 'production')
         }));
     }
 
+const corsOptions = {
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    preflightContinue: true,
+    maxAge: 600,
+    };
+    app.options('*', cors(corsOptions));
+
 app.use(morgan(morganOption))
 app.use(express.json()) 
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(helmet())
 
 app.get('/', (req, res) => {
