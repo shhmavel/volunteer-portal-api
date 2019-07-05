@@ -29,19 +29,19 @@ const morganOption = (NODE_ENV === 'production')
             format: winston.format.simple()
         }));
     }
-
-const corsOptions = {
-    origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    preflightContinue: true,
-    maxAge: 600,
-    };
-    app.options('*', cors(corsOptions));
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
+        res.header("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE");
+        if (req.method === "OPTIONS") {
+          return res.send(204);
+        }
+        next();
+      });
 
 app.use(morgan(morganOption))
 app.use(express.json()) 
-app.use(cors(corsOptions))
+//app.use(cors())
 app.use(helmet())
 
 app.get('/', (req, res) => {
