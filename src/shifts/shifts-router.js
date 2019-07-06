@@ -9,7 +9,7 @@ const jsonBodyParser = express.json()
 shiftsRouter
     .route('/')
     //.post(requireAuth, jsonBodyParser, (req, res, next) => {
-    .post( jsonBodyParser, (req, res, next) => {
+    .post( requireAuth, jsonBodyParser, (req, res, next) => {
         const { name, day, date, time, race_id } = req.body
         const newShift = { name, day, date, time, race_id }
 
@@ -34,6 +34,7 @@ shiftsRouter
 
 shiftsRouter
     .route('/')
+    .all(requireAuth)
     .get((req, res, next) => {
         ShiftsService.getAllShifts(
             req.app.get('db'),
@@ -48,6 +49,7 @@ shiftsRouter
 
 shiftsRouter
     .route('/:race_id')
+    .all(requireAuth)
     .get((req, res, next) => {
         ShiftsService.getShiftsForRace(
             req.app.get('db'),
@@ -61,6 +63,7 @@ shiftsRouter
 
 shiftsRouter
     .route('/user_id')
+    .all(requireAuth)
     .get((req, res, next) => {
         ShiftsService.getShiftsForUser(
             req.app.get('db')
@@ -68,6 +71,7 @@ shiftsRouter
     })
 shiftsRouter
     .route('/:shift_id')
+    .all(requireAuth)
     .patch(jsonBodyParser, (req, res, next) => {
         const { user_id } = req.body
         const  shiftToUpdate = { user_id }
