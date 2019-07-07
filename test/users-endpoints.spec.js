@@ -129,9 +129,9 @@ describe('Users Endpoints', function() {
         context(`Happy path`, () => {
             it(`responds 201, serialized user, storing bcrypted password`, () => {
                 const newUser = {
-                    email: 'tet email',
+                    email: 'email7@web.com',
                     password: '11AAaa!!',
-                    full_name: 'test full_name',
+                    full_name: 'test full_name'
                 }
                 return supertest(app)
                     .post('/api/users')

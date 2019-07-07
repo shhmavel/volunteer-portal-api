@@ -11,15 +11,12 @@ function requireAuth(req, res, next) {
     }
 
     try{
-        console.error('in try block')
         const payload = AuthService.verifyJwt(bearerToken)
-        console.error('passed jwt')
         AuthService.getUserWithUserName(
             req.app.get('db'),
             payload.sub,
         )
         .then(user => {
-            console.error('in then')
             if(!user)
                 return res.status(401).json({ error: 'Unauthorized request1'})
 

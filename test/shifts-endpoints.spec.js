@@ -6,7 +6,7 @@ const helpers = require('./test-helpers')
 describe('Shifts Endpoints', function(){
     let db 
 
-    const { testRaces, testShifts } = helpers.makeShiftsFixtures()
+    const { testRaces, testShifts, testUsers } = helpers.makeShiftsFixtures()
 
     before('make knex instance', () => {
         db = knex({
@@ -23,7 +23,7 @@ describe('Shifts Endpoints', function(){
     afterEach('cleanup', () => helpers.cleanTables(db))
 
     describe(`POST /api/shifts`, () => {
-        context(`Given there are articles in the database`, () => {
+        context(`Given there are shifts in the database`, () => {
             beforeEach('insert races', () => {
                 helpers.seedRaces(
                     db,
@@ -40,7 +40,7 @@ describe('Shifts Endpoints', function(){
                 }
                 return supertest(app)
                     .post('/api/shifts')
-                    //.set('Authorization', helpers.makeAuthHeader(testUsers[0]))
+                    .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
                     .send(newShift)
                     .expect(201)
                     .expect(res => {
@@ -69,26 +69,5 @@ describe('Shifts Endpoints', function(){
             })
         })
     })
-    // describe(`GET /api/shifts`, () => {
-    //     context(`Given there are articles in the database`, () => {
-    //         beforeEach('insert races and shifts', () => {
-    //             helpers.seedRaces(
-    //                 db,
-    //                 testRaces,
-    //             )
-    //             .then(
-    //             helpers.seedShifts(
-    //                 db,
-    //                 testShifts,
-    //             ))
-    //         })
-    //         it(`returns all shifts `, () => {
-    //             return supertest(app)
-    //                 .get('/api/shifts')
-    //                 .expect(200, testShifts)
-
-    //         })
-    //     })
-    // })
  
 })
