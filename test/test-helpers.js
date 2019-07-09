@@ -79,7 +79,7 @@ function makeShiftsArray(){
             date: "2019-02-03T00:00:00.000Z",
             time: "test time1",
             day: "Saturday",
-            race_name:'Test race 1',
+            race_name:'Test Race 1',
             race_id: 1,
             
         },
@@ -89,7 +89,7 @@ function makeShiftsArray(){
             date: "2019-02-03T00:00:00.000Z",
             time: "test time2",
             day: "Saturday",
-            race_name:'Test race 1',
+            race_name:'Test Race 1',
             race_id: 1,
             
         },
@@ -99,7 +99,7 @@ function makeShiftsArray(){
             date: "2019-02-03T00:00:00.000Z",
             time: "test time3",
             day: "Saturday",
-            race_name:'Test race 2',
+            race_name:'Test Race 2',
             race_id: 2,
             
         },
@@ -109,7 +109,7 @@ function makeShiftsArray(){
             date: "2019-02-03T00:00:00.000Z",
             time: "test time4",
             day: "Saturday",
-            race_name:'Test race 3',
+            race_name:'Test Race 3',
             race_id: 3,
             
         },
@@ -119,7 +119,7 @@ function makeShiftsArray(){
             date: "2019-02-03T00:00:00.000Z",
             time: "test time5",
             day: "Saturday",
-            race_name:'Test race 4',
+            race_name:'Test Race 4',
             race_id: 4,
             
         },

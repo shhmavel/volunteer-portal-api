@@ -11,7 +11,7 @@ const ShiftsService = {
                 'sht.date',
                 'sht.day',
                 'sht.time',
-                'rc.name AS raceName',
+                'rc.name AS race_name',
                 'sht.user_id',
             )
             .modify(function(queryBuilder) {
@@ -54,7 +54,7 @@ const ShiftsService = {
           date: shift.date,
           day: shift.day,
           time: shift.time,
-          raceName: shift.raceName,
+          race_name: shift.race_name,
         }
     },
     getShiftsForRace(db, race_id){
@@ -67,7 +67,7 @@ const ShiftsService = {
                 'sht.date',
                 'sht.day',
                 'sht.time',
-                'rc.name AS raceName',
+                'rc.name AS race_name',
             )
             .where('sht.race_id', race_id)
             .join(
