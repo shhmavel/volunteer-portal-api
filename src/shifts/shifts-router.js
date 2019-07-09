@@ -8,7 +8,6 @@ const jsonBodyParser = express.json()
 
 shiftsRouter
     .route('/')
-    //.post(requireAuth, jsonBodyParser, (req, res, next) => {
     .post( requireAuth, jsonBodyParser, (req, res, next) => {
         const { name, day, date, time, race_id } = req.body
         const newShift = { name, day, date, time, race_id }
